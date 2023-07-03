@@ -1,0 +1,163 @@
+﻿<html lang="zh" xml:lang="zh" xmlns="http://www.w3.org/1999/xhtml" xmlns:web="http://schemas.live.com/Web/">
+  <head>
+  <meta charset="UTF-8" />
+    <meta name="generator"
+    content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39" />
+<meta name="viewport" content="width=800, initial-scale=1 width=device-width" />
+
+    <title>{{sim-ic.title}}</title>
+	<style type="text/css">
+	
+	
+	.title1 { 
+    color: #000000;
+    font-family:"微软雅黑", "宋体", "黑体", Arial;
+    font-size: 32px;
+    font-weight: bold;
+    height: 32px;
+    line-height: 32px;
+    margin: 18px 0 80px;
+    padding: 8px 0 5px 5px;
+	text-align:center
+   }
+	
+	.title2 {
+    color: #000000;
+    font-family:"微软雅黑", "宋体", "黑体", Arial;
+    font-size: 24px;
+    font-weight: bold;
+    height: 24px;
+    line-height: 24px;
+    margin: 12px 0 ;
+    padding: 5px 0 5px 10px;
+	}
+	
+	.title3 {
+    color: #000000;
+    font-family:"微软雅黑", "宋体", "黑体", Arial;
+    font-size: 16px;
+    font-weight: bold;
+    height: 16px;
+    line-height: 16px;
+    margin: 20px 0 ;
+    padding: 5px 0 5px 20px;
+	}
+ 
+	
+	.content {color:#000000; margin-left: 80px;font-size: 16px;line-height: 24px;}
+	
+	.picture {color:#000000; margin: 50px 0 50px 80px;font-size: 16px;line-height: 24px;vertical-align:middle;}
+		
+	.gridtable table{
+	  margin-left: 80px;
+            font-family: verdana,arial,sans-serif;
+            font-size:11px;
+            color:#333333;
+            border-width: 1px;
+            border-color: #666666;
+            border-collapse: collapse;
+        }
+    .gridtable th {
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #666666;
+            background-color: #dedede;
+        }
+    .gridtable td {
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #666666;
+            background-color: #ffffff;
+        }
+		
+		.desc{
+		
+		margin:30px 0px 30px 50px;
+		font-size: 14px;line-height: 20px;
+		}
+		
+		.end {
+		margin:100px 0 100px 0;
+		text-align: right;
+		}
+	</style>
+  </head>
+  <body >
+	<div class="title1"> {{sim-ic.title}}</div>
+	
+    {% for section in sim-ic.sections %}
+	<div>
+	
+	<div class="title2"> {{loop.index1}} {{section.name}}
+	</div>
+	 {% for item in section.items %}
+	
+	{% if item.type == "text" %}
+	<div>
+	  <div class="title3">{{loop.parent.index1}}.{{loop.index1}} {{item.title}}</div>
+	  <div class="content">{{item.content}}</div>
+    </div>
+	{% endif %}
+	
+	
+	{% if item.type == "table" or item.type == "curve" %}
+	<div  class="desc">	{{item.desc}}	</div>
+	<div class="gridtable">
+	<table >
+        <tr>
+		<th>序号</th>
+		{% for h in item.header %} 
+          <th>{{h }}</th>
+		  {% endfor %}
+           
+        </tr>
+   	
+	   
+		{% for row in item.content %} 
+		 
+      <tr>
+	  <td>{{loop.index1}}</td>
+		  {% for r in row %} 
+			  <td>{{r}}</td>
+			{% endfor %}
+		</tr>
+		
+		{% endfor %}
+		
+	{% endif %}
+		
+    </table></div>
+	
+	
+	{% if item.type == "picture" %}
+	<div class="desc">{{item.desc}}</div>
+	<div class="picture">
+	  
+      <img  src="{{item.file_path}}" width="{{item.width}}" height="{{item.height}}"
+      alt="{{item.title}}" />
+	 
+    </div>
+	{% endif %}
+			
+    {% if item.type == "curve" %}
+	<div style="color:blue;">
+		curve类型图片输出暂不支持！
+		{{item.title}}
+    </div>
+	{% endif %} 
+	
+	
+	
+		{% endfor %}	<!-- items--->
+	</div> <!-- sections--->
+	{% endfor %}
+	
+	
+	<div class="end">
+	------END
+	</div>
+
+  </body>
+</html>
